@@ -14,6 +14,16 @@ export default function CampusMap(){
       .catch(err => { console.error(err); setMarkers([]) })
   }, [])
 
+  // If a ?focus=name is passed, focus that marker once markers load
+  useEffect(()=>{
+    const params = new URLSearchParams(window.location.search)
+    const focus = params.get('focus')
+    if(focus && markers.length){
+      const m = markers.find(x => x.name === focus || x.id === focus)
+      if(m) setTimeout(()=> focusMarker(m), 400)
+    }
+  }, [markers])
+
   // load google maps script
   useEffect(()=>{
     const key = import.meta.env.VITE_GOOGLE_MAPS_API_KEY

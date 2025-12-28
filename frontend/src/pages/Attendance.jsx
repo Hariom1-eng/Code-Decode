@@ -10,6 +10,12 @@ export default function Attendance(){
     try{
       const res = await axios.post('/api/attendance/qr-scan', { token, studentId })
       setMessage(res.data.message)
+      try{
+        const msg = encodeURIComponent(res.data.message)
+        window.open(`/attendance/result?msg=${msg}`, '_blank')
+      }catch(e){
+        console.error('Failed to open attendance result in new tab', e)
+      }
     }catch(err){
       setMessage(err.response?.data?.error || 'Error')
     }

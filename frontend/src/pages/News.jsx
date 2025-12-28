@@ -13,7 +13,7 @@ export default function News(){
     <div style={{ padding: 20 }}>
       <h2>AI & Google Updates</h2>
       <ul>
-        {news.map(n=> <li key={n.id}><a href={n.link}>{n.title}</a></li>)}
+        {news.map(n=> <li key={n.id}><a href={n.link} target="_blank" rel="noopener noreferrer">{n.title}</a></li>)}
       </ul>
       <p>Future: add Google News API integration and admin announcements.</p>
     </div>

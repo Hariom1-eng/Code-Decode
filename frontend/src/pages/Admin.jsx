@@ -10,6 +10,12 @@ export default function Admin(){
       const res = await axios.post('/api/attendance/generate-qr', {}, { withCredentials: true })
       setQr(res.data)
       setError(null)
+      try{
+        const payload = window.btoa(unescape(encodeURIComponent(JSON.stringify(res.data))))
+        window.open(`/admin/qr?data=${encodeURIComponent(payload)}`, '_blank')
+      }catch(e){
+        console.error('Failed to open QR in new tab', e)
+      }
     }catch(err){
       setError(err.response?.data?.error || 'Error generating QR (are you admin?)')
       setQr(null)

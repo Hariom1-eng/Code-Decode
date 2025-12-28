@@ -5,9 +5,17 @@ export default function AILearning(){
   const [prompt, setPrompt] = useState('')
   const [result, setResult] = useState(null)
 
+  const b64Encode = (s)=> window.btoa(unescape(encodeURIComponent(s)))
+
   const handleGenerate = async ()=>{
     const res = await axios.post('/api/ai/generate-image', { prompt })
     setResult(res.data)
+    try{
+      const payload = b64Encode(JSON.stringify(res.data))
+      window.open(`/ai/result?data=${encodeURIComponent(payload)}`, '_blank')
+    }catch(e){
+      console.error('Could not open AI result in new tab', e)
+    }
   }
 
   return (
